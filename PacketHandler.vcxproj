@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D16C13A1-6098-41DF-B802-AE0A33CB28C0}</ProjectGuid>
+    <RootNamespace>URBot</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\URBot;$(ReferencePath)</ReferencePath>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\URBot;$(ReferencePath)</ReferencePath>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\extra\boost_1_43_0;$(ProjectDir)\..\extra\libatomic_ops-1.2\src;$(ProjectDir)\..\extra\LogCpp2/headers;$(ProjectDir)\..\extra\json_spirit_v4.03\json_spirit;$(ProjectDir)\unitTests;$(ProjectDir)\..\extra\Winpcap441\Include;$(ProjectDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;WPCAP;HAVE_REMOTE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>Ws2_32.lib;wpcap.lib;LogCpp2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\extra\boost_1_43_0\stage\lib;$(ProjectDir)\..\extra\LogCpp2\Debug;$(ProjectDir)\..\extra\Winpcap441\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="sources\global.cpp" />
+    <ClCompile Include="unitTests\globalTests.cpp" />
+    <ClCompile Include="sources\HTTPconnection.cpp" />
+    <ClCompile Include="sources\HTTPlayer.cpp" />
+    <ClCompile Include="sources\HTTPparser.cpp" />
+    <ClCompile Include="sources\IPdatagram.cpp" />
+    <ClCompile Include="sources\IPfragment.cpp" />
+    <ClCompile Include="sources\IPlayer.cpp" />
+    <ClCompile Include="sources\JSONlayer.cpp" />
+    <ClCompile Include="sources\PacketHandler.cpp" />
+    <ClCompile Include="sources\TCPconnection.cpp" />
+    <ClCompile Include="sources\TCPlayer.cpp" />
+    <ClCompile Include="sources\TCPsegment.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers\global.h" />
+    <ClInclude Include="unitTests\globalTests.h" />
+    <ClInclude Include="headers\HTTPconnection.h" />
+    <ClInclude Include="headers\HTTPlayer.h" />
+    <ClInclude Include="sources\HTTPpacket.h" />
+    <ClInclude Include="headers\HTTPparser.h" />
+    <ClInclude Include="headers\IPdatagram.h" />
+    <ClInclude Include="headers\IPfragment.h" />
+    <ClInclude Include="headers\IPlayer.h" />
+    <ClInclude Include="headers\JSONlayer.h" />
+    <ClInclude Include="headers\PacketHandler.h" />
+    <ClInclude Include="unitTests\runTests.h" />
+    <ClInclude Include="headers\TCPconnection.h" />
+    <ClInclude Include="headers\TCPlayer.h" />
+    <ClInclude Include="headers\TCPsegment.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
