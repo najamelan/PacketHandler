@@ -12,12 +12,12 @@ bool IPdatagram::processFragment( const IPfragment& fragment )
 	{ FILE_LOG( logDEBUG ) << "IPdatagram::processFragment counter: " << ++packetCounter; }
 
 	assert( fragment.getDatagramID() == uniqueID );
-//	std::cout << "fragment offset: " << std::hex << fragment.fragOffset() << " and MF " << fragment.moreFragFlag() << std::endl;
+//   std::cout << "fragment offset: " << std::hex << fragment.fragOffset() << " and MF " << fragment.moreFragFlag() << std::endl;
 
 	// for now we will only implement unfragmented datagrams because we never get fragmented onces, so cannot test an impl.
 	assert( !fragment.moreFragFlag() && fragment.fragOffset() == 0 );
 
-//	std::cout << "fragment total length: " << fragment.totalLength() << std::endl;
+//   std::cout << "fragment total length: " << fragment.totalLength() << std::endl;
 
 	// if this is the first fragment create an appropriate buffer
 	if( !buffer )
@@ -25,8 +25,8 @@ bool IPdatagram::processFragment( const IPfragment& fragment )
 		// If this is an unfragmented datagram, just copy pointer, don't copy data
 		if( !fragment.moreFragFlag() && fragment.fragOffset() == 0 )
 		{
-			buffer		= const_cast<byte*>( fragment.payload );
-			bufferSize	= fragment.totalLength() - fragment.headerLength();
+			buffer      = const_cast<byte*>( fragment.payload );
+			bufferSize  = fragment.totalLength() - fragment.headerLength();
 
 			TCPsegment tcpSegment( this );
 			TCPlayer::processSegment( tcpSegment );
@@ -37,9 +37,9 @@ bool IPdatagram::processFragment( const IPfragment& fragment )
 		{
 			// this is a fragmented ip packet, not implemented!!!
 
-			buffer		= new byte[MAX_TCP_SIZE];
-			bufferSize	= MAX_TCP_SIZE;
-			deleteBuffer= true;
+			buffer       = new byte[MAX_TCP_SIZE];
+			bufferSize   = MAX_TCP_SIZE;
+			deleteBuffer = true;
 			return false;
 		}
 	}
@@ -48,31 +48,31 @@ bool IPdatagram::processFragment( const IPfragment& fragment )
 
 
 IPdatagram::IPdatagram( uint id, const byte* const pkt_data ) :
-	IPfragment	( pkt_data	),
-	MAX_TCP_SIZE( 66000		),
-	buffer		( 0			),
-	bufferSize	( 0			),
-	deleteBuffer( false		),
-	uniqueID		( id			)
+	IPfragment   ( pkt_data  ),
+	MAX_TCP_SIZE ( 66000     ),
+	buffer       ( 0         ),
+	bufferSize   ( 0         ),
+	deleteBuffer ( false     ),
+	uniqueID     ( id        )
 {
 }
 
 
 IPdatagram::IPdatagram( const IPdatagram& src ) :
-	IPfragment	( src						),
-	MAX_TCP_SIZE( src.MAX_TCP_SIZE	),
-	buffer		( 0						),
-	bufferSize	( 0						),
-	deleteBuffer( false					),
-	uniqueID		( src.uniqueID			)
+	IPfragment   ( src                ),
+	MAX_TCP_SIZE ( src.MAX_TCP_SIZE   ),
+	buffer       ( 0                  ),
+	bufferSize   ( 0                  ),
+	deleteBuffer ( false              ),
+	uniqueID     ( src.uniqueID       )
 {
 	if( src.buffer )
 	{
 		assert( src.bufferSize );
 
-		buffer		= new byte[src.bufferSize];
-		bufferSize	= src.bufferSize;
-		deleteBuffer= true;
+		buffer       = new byte[src.bufferSize];
+		bufferSize   = src.bufferSize;
+		deleteBuffer = true;
 
 		memcpy( buffer, src.buffer, src.bufferSize );
 	}

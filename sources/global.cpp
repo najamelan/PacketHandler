@@ -6,10 +6,10 @@ using namespace std;
 
 std::string IPaddress::printable()
 {
-	return 		boost::lexical_cast<std::string>( (unsigned short) byte1 ) + "."
+	return      boost::lexical_cast<std::string>( (unsigned short) byte1 ) + "."
 				+  boost::lexical_cast<std::string>( (unsigned short) byte2 ) + "."
-				+	boost::lexical_cast<std::string>( (unsigned short) byte3 ) + "."
-				+	boost::lexical_cast<std::string>( (unsigned short) byte4 );
+				+  boost::lexical_cast<std::string>( (unsigned short) byte3 ) + "."
+				+  boost::lexical_cast<std::string>( (unsigned short) byte4 );
 }
 
 int IPaddressToInt( const IPaddress& address )
@@ -23,9 +23,9 @@ int IPaddressToInt( const IPaddress& address )
 	return result;
 }
 
-bool	operator==( const IPaddress& lhs, const IPaddress& rhs )
+bool operator==( const IPaddress& lhs, const IPaddress& rhs )
 {
-	if(		lhs.byte1 == rhs.byte1
+	if(      lhs.byte1 == rhs.byte1
 			&& lhs.byte2 == rhs.byte2
 			&& lhs.byte3 == rhs.byte3
 			&& lhs.byte4 == rhs.byte4 )
@@ -76,7 +76,7 @@ byte convertHexNum( const byte& a, const byte& b )
 
 		return 0x00;
 
-	return		(	( ( a & 0xf ) + ( ( a >= 'A' ) ? 9 : 0 ) ) << 4 )
-            |		( ( b & 0xf ) + ( ( b >= 'A' ) ? 9 : 0 ) );
+	return      (   ( ( a & 0xf ) + ( ( a >= 'A' ) ? 9 : 0 ) ) << 4 )
+				|      ( ( b & 0xf ) + ( ( b >= 'A' ) ? 9 : 0 ) );
 
 }

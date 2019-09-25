@@ -12,13 +12,13 @@ void JSONlayer::processString( std::string& contentString )
 
 	mValue value;
 
-//	if( !json_spirit::read( contentString, *value ) )
-//	{
-//		std::cout	<< "we have a json problem with:" << std::endl
-//						<< contentString << std::endl;
+//   if( !json_spirit::read( contentString, *value ) )
+//   {
+//      std::cout   << "we have a json problem with:" << std::endl
+//                  << contentString << std::endl;
 //
-//		//		return;
-//	}
+//      //      return;
+//   }
 
 	// we need to remove the word output because json_spirit doesn't take a top level name
 	if( contentString.find( "output=" ) != std::string::npos ) contentString.erase( 0, 7 );
@@ -29,7 +29,7 @@ void JSONlayer::processString( std::string& contentString )
 	}
 	catch ( const json_spirit::Error_position& e )
 	{
-		std::cout	<< "we have a json problem with:" << std::endl << std::endl
+		std::cout   << "we have a json problem with:" << std::endl << std::endl
 						<< contentString.insert( e.column_, "<-ERROR->" ) << std::endl << std::endl
 						<< "reason: " << e.reason_ << std::endl << std::endl;
 	}

@@ -13,14 +13,14 @@
 const dword TCPstream::MAXONHOLDPACKETS = 30;
 
 TCPstream::TCPstream( bool first ) :
-	  _finReceived			( false	)
-	, _hasAcknowledgedFin( false	)
-	, _finSequence			( 0		)
-	, _first					( first	)
-	, packetsReceived		( 0		)
-	, nextExpectedSeq		( 0		)
+	  _finReceived         ( false  )
+	, _hasAcknowledgedFin  ( false  )
+	, _finSequence         ( 0      )
+	, _first               ( first  )
+	, packetsReceived      ( 0      )
+	, nextExpectedSeq      ( 0      )
 {
-	httpStream.setTCPstream( this	);
+	httpStream.setTCPstream( this );
 }
 
 TCPstream::~TCPstream()
@@ -40,29 +40,29 @@ bool TCPstream::processSegment( const TCPsegment& segment )
 	static uint packetCounter = 0;
 	{ FILE_LOG( logDEBUG ) << "TCPstream::processSegment counter: " << ++packetCounter; }
 
-//	ConsoleColor kleur = white;
+//   ConsoleColor kleur = white;
 //
-//	if( !connection->firstIsSource( segment ) )
+//   if( !connection->firstIsSource( segment ) )
 //
-//		kleur =  red;
+//      kleur =  red;
 //
-//	std::cout
-//		<< kleur
-//		<< (int) srcIP().byte1 << "." << (int) srcIP().byte2 << "."
-//		<< (int) srcIP().byte3 << "." << (int) srcIP().byte4 << " -> "
-//		<< (int) dstIP().byte1 << "." << (int) dstIP().byte2 << "."
-//		<< (int) dstIP().byte3 << "." << (int) dstIP().byte4 << " - "
-//		<< std::setw(2) << connection->friendlyID()
-//		<< " seq: " << std::setw(10) << segment.sequenceNum() << " "
-//		<< " ack: " << std::setw(10) << segment.acknowledgeNum() << " "
-//		<< (segment.synFlag() ? "SYN," : "    " )
-//		<< (segment.finFlag() ? "FIN," : "    " )
-//		<< (segment.rstFlag() ? "RST," : "    " )
-//		<< (segment.pshFlag() ? "PSH," : "    " )
-//		<< (segment.ackFlag() ? "ACK," : "    " )
-//		<< " dataLen: "
-//		<< segment.dataLength()
-//		<< std::endl << ( kleur == red? white: red );
+//   std::cout
+//      << kleur
+//      << (int) srcIP().byte1 << "." << (int) srcIP().byte2 << "."
+//      << (int) srcIP().byte3 << "." << (int) srcIP().byte4 << " -> "
+//      << (int) dstIP().byte1 << "." << (int) dstIP().byte2 << "."
+//      << (int) dstIP().byte3 << "." << (int) dstIP().byte4 << " - "
+//      << std::setw(2) << connection->friendlyID()
+//      << " seq: " << std::setw(10) << segment.sequenceNum() << " "
+//      << " ack: " << std::setw(10) << segment.acknowledgeNum() << " "
+//      << (segment.synFlag() ? "SYN," : "    " )
+//      << (segment.finFlag() ? "FIN," : "    " )
+//      << (segment.rstFlag() ? "RST," : "    " )
+//      << (segment.pshFlag() ? "PSH," : "    " )
+//      << (segment.ackFlag() ? "ACK," : "    " )
+//      << " dataLen: "
+//      << segment.dataLength()
+//      << std::endl << ( kleur == red? white: red );
 
 
 
@@ -91,12 +91,12 @@ bool TCPstream::processSegment( const TCPsegment& segment )
 		}
 
 		onHoldList.push_back( new TCPsegment( segment ) );
-//		std::cout << green << "putting packet on hold, conn: " << connection->friendlyID()
-//					 << " seq: " << std::setw(10) << segment.sequenceNum() << " "
-//					 << " ack: " << std::setw(10) << segment.acknowledgeNum() << " "
-//					 << " dataLen: "
-//					 << segment.dataLength()
-//					 << white << std:: endl;
+//      std::cout << green << "putting packet on hold, conn: " << connection->friendlyID()
+//                << " seq: " << std::setw(10) << segment.sequenceNum() << " "
+//                << " ack: " << std::setw(10) << segment.acknowledgeNum() << " "
+//                << " dataLen: "
+//                << segment.dataLength()
+//                << white << std:: endl;
 
 		return false;
 	}
@@ -114,12 +114,12 @@ bool TCPstream::processSegment( const TCPsegment& segment )
 /// Checks if one of the waiting TCPsegment 's is ready to be added to the stream
 
 /**
- * 	Iterate through onHoldList to find a TCPsegment who's sequenceNum matches nextExpectedSeq.
- * 	If the TCPstream#sequenceNum is smaller, the packet is at least partially dated and we will check to see
- * 	if there is new info, if not it is removed.
- * 	If the sequenceNum is bigger, the packet needs to wait longer
- * 	If the sequenceNum equals the nextExpectedSeq, this packet is on time now and needs to be
- * 	processed by streamSegment.
+ *    Iterate through onHoldList to find a TCPsegment who's sequenceNum matches nextExpectedSeq.
+ *    If the TCPstream#sequenceNum is smaller, the packet is at least partially dated and we will check to see
+ *    if there is new info, if not it is removed.
+ *    If the sequenceNum is bigger, the packet needs to wait longer
+ *    If the sequenceNum equals the nextExpectedSeq, this packet is on time now and needs to be
+ *    processed by streamSegment.
  */
 bool TCPstream::tryOnHold()
 {
@@ -138,13 +138,13 @@ bool TCPstream::tryOnHold()
 		// dated sequence
 		if( (*it)->sequenceNum() + (*it)->dataLength() <= nextExpectedSeq )
 		{
-//		std::cout	<< green << "Deleting dated waiting packet: " << connection->friendlyID()
-//						<< ", # waiting: " << onHoldList.size()
-//						<< " seq: " << std::setw(10) << (**it).sequenceNum() << " "
-//						<< " ack: " << std::setw(10) << (**it).acknowledgeNum() << " "
-//						<< " dataLen: "
-//						<< (**it).dataLength()
-//						<< std::endl;
+//      std::cout   << green << "Deleting dated waiting packet: " << connection->friendlyID()
+//                  << ", # waiting: " << onHoldList.size()
+//                  << " seq: " << std::setw(10) << (**it).sequenceNum() << " "
+//                  << " ack: " << std::setw(10) << (**it).acknowledgeNum() << " "
+//                  << " dataLen: "
+//                  << (**it).dataLength()
+//                  << std::endl;
 
 			delete *it;
 
@@ -153,13 +153,13 @@ bool TCPstream::tryOnHold()
 		}
 
 		// holds useful data
-//		std::cout	<< green << "Found waiting packet for connection: " << connection->friendlyID()
-//						<< ", # waiting: " << onHoldList.size()
-//						<< " seq: " << std::setw(10) << (**it).sequenceNum() << " "
-//						<< " ack: " << std::setw(10) << (**it).acknowledgeNum() << " "
-//						<< " dataLen: "
-//						<< (**it).dataLength()
-//						<< std::endl;
+//      std::cout   << green << "Found waiting packet for connection: " << connection->friendlyID()
+//                  << ", # waiting: " << onHoldList.size()
+//                  << " seq: " << std::setw(10) << (**it).sequenceNum() << " "
+//                  << " ack: " << std::setw(10) << (**it).acknowledgeNum() << " "
+//                  << " dataLen: "
+//                  << (**it).dataLength()
+//                  << std::endl;
 
 		streamSegment( **it );
 		return true;
@@ -169,7 +169,7 @@ bool TCPstream::tryOnHold()
 	return false;
 }
 
-void TCPstream::setConnection( const TCPconnection* connection	)
+void TCPstream::setConnection( const TCPconnection* connection   )
 {
 	this->connection = connection;
 }
@@ -182,10 +182,10 @@ bool TCPstream::streamSegment( const TCPsegment& segment )
 	{ FILE_LOG( logDEBUG ) << "TCPstream::streamSegment counter: " << ++packetCounter; }
 
 	// offset is used for packets with overlapping data. We will only copy the new data
-	uint offset		  	= 	nextExpectedSeq		 	- segment.sequenceNum()		;
-	uint newDataSize	= 	segment.dataLength() 	- offset							;
-	bool newData		= 	newDataSize > 0												;
-	nextExpectedSeq 	+= newDataSize														;
+	uint offset      =  nextExpectedSeq          - segment.sequenceNum() ;
+	uint newDataSize =  segment.dataLength()    - offset                 ;
+	bool newData     =  newDataSize > 0                                  ;
+	nextExpectedSeq  += newDataSize                                      ;
 	++packetsReceived;
 
 	assert( offset >= 0 );
@@ -233,14 +233,14 @@ IPaddress TCPstream::srcIP() const
 {
 	// if we are first, the we sent first, so the source ip of the packets arriving here
 	// have been sent by the destination address of the connectionID
-	return _first?		connection->connectionID().dAddress
-						:	connection->connectionID().sAddress;
+	return _first  ?  connection->connectionID().dAddress
+						:  connection->connectionID().sAddress;
 }
 
 IPaddress TCPstream::dstIP() const
 {
-	return _first?		connection->connectionID().sAddress
-						:	connection->connectionID().dAddress;
+	return _first  ?  connection->connectionID().sAddress
+						:  connection->connectionID().dAddress;
 }
 
 
@@ -252,24 +252,24 @@ uint TCPconnection::counter = 0;
 
 TCPconnection::TCPconnection( const TCPconnectionID& id )
 :
-  _closed			( false			)
-, _friendlyID		( ++counter		)
-, _connectionID	( id				)
-,  firstSrcIP		( id.sAddress	)
-,  firstPort		( id.sPort		)
-,	firstStream		( true			)
-,	secondStream	( false			)
+  _closed         ( false       )
+, _friendlyID     ( ++counter   )
+, _connectionID   ( id          )
+,  firstSrcIP     ( id.sAddress )
+,  firstPort      ( id.sPort    )
+,  firstStream    ( true        )
+,  secondStream   ( false       )
 
 {
-	firstStream.setConnection	( this );
-	secondStream.setConnection	( this );
+	firstStream .setConnection( this );
+	secondStream.setConnection( this );
 }
 
 
 
 
 
-void	TCPconnection::processSegment( const TCPsegment& segment )
+void TCPconnection::processSegment( const TCPsegment& segment )
 {
 	static uint packetCounter = 0;
 	{ FILE_LOG( logDEBUG ) << "TCPconnection::processSegment counter: " << ++packetCounter; }
@@ -282,7 +282,7 @@ void	TCPconnection::processSegment( const TCPsegment& segment )
 
 	// check if the connection is closing
 	// if the receiving stream has sent a fin flag earlier, see if this is an acknowledgement
-	if(		srcStream.finReceived()
+	if(      srcStream.finReceived()
 			&& segment.ackFlag()
 			&& segment.acknowledgeNum() == srcStream.finSequence() )
 	{
@@ -295,8 +295,8 @@ void	TCPconnection::processSegment( const TCPsegment& segment )
 // Let's you know to which stream (direction) a segment will belong
 bool TCPconnection::firstIsSource( const TCPsegment& segment ) const
 {
-	return		segment.connectionID.sAddress == firstSrcIP
-				&& segment.connectionID.sPort		== firstPort;
+	return      segment.connectionID.sAddress == firstSrcIP
+				&& segment.connectionID.sPort    == firstPort;
 }
 
 

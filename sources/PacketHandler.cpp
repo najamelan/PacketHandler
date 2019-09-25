@@ -14,11 +14,11 @@ pcap_t* PacketHandler::adhandle = 0;
 
 uint PacketHandler::listen()
 {
-	pcap_if_t*	alldevs;
-	pcap_if_t*	d;
-	int 			inum;
-	int 			i = 0;
-	char 			errbuf[PCAP_ERRBUF_SIZE];
+	pcap_if_t*   alldevs;
+	pcap_if_t*   d;
+	int          inum;
+	int          i = 0;
+	char         errbuf[PCAP_ERRBUF_SIZE];
 
 	// Retrieve the device list from the local machine
 	if ( pcap_findalldevs_ex( PCAP_SRC_IF_STRING, NULL, &alldevs, errbuf ) == -1 )
@@ -62,14 +62,19 @@ uint PacketHandler::listen()
 		;
 
 	// Open the device
-	if ( (adhandle = pcap_open( 	d->name, 		// name of the device
-											65536, 			// portion of the packet to capture
-																// 65536 guarantees that the whole packet will be captured on all the link layers
-											0, 				// not in promiscuous mode
-											1000, 			// read timeout
-											NULL, 			// authentication on the remote machine
-											errbuf 			// error buffer
-										) ) == NULL )
+	if
+	( ( adhandle = pcap_open
+		(
+			d->name,       // name of the device
+			65536,         // portion of the packet to capture
+								// 65536 guarantees that the whole packet will be captured on all the link layers
+			0,             // not in promiscuous mode
+			1000,          // read timeout
+			NULL,          // authentication on the remote machine
+			errbuf          error buffer
+		)
+		) == NULL
+	)
 	{
 		fprintf( stderr, "\nUnable to open the adapter. %s is not supported by WinPcap\n", d->name );
 
@@ -131,7 +136,7 @@ void pcapCallback( byte* param, const struct pcap_pkthdr* header, const byte* pk
 	dropped = pcap_stats_ex( PacketHandler::adhandle, &statSize )->ps_drop;
 
 	if( dropped !=0 )
-	
+
 		{ FILE_LOG( logDEBUG ) << "packets dropped by winpcap: " << dropped; }
 
 

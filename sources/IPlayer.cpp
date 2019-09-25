@@ -6,27 +6,27 @@ std::list<IPdatagram*> IPlayer::datagramList;
 
 void IPlayer::processFragment( IPfragment& fragment )
 {
-//	static uint packetCounter = 0;
-//	{ FILE_LOG( logDEBUG ) << "IPlayer::processFragment counter: " << ++packetCounter; }
+//   static uint packetCounter = 0;
+//   { FILE_LOG( logDEBUG ) << "IPlayer::processFragment counter: " << ++packetCounter; }
 //
-//	std::stringstream output( std::ios_base::out | std::ios_base::in | std::ios_base::binary );
-//	const char* const input = reinterpret_cast<const char* const >( fragment.ipHeader );
+//   std::stringstream output( std::ios_base::out | std::ios_base::in | std::ios_base::binary );
+//   const char* const input = reinterpret_cast<const char* const >( fragment.ipHeader );
 //
-//	output.write( input, fragment.totalLength() );
-//	for( int i = 0;  fragment.totalLength()  < i; ++i  )
+//   output.write( input, fragment.totalLength() );
+//   for( int i = 0;  fragment.totalLength()  < i; ++i  )
 //
-//		output.put( input[i] );
+//      output.put( input[i] );
 //
-//	{
-//		FILE_LOG( logDEBUG ) << "IPlayer::processFragment: { ";
-//		FILE_LOG( logDEBUG ).write( input, fragment.totalLength() )  << " }";
-//	}
+//   {
+//      FILE_LOG( logDEBUG ) << "IPlayer::processFragment: { ";
+//      FILE_LOG( logDEBUG ).write( input, fragment.totalLength() )  << " }";
+//   }
 
 
 	// filter some traffic. We only want urban rivals
-	if(		fragment.srcAddr().byte1 != 78
+	if(      fragment.srcAddr().byte1 != 78
 			|| fragment.srcAddr().byte2 != 109
-			|| fragment.srcAddr().byte3 != 87	)
+			|| fragment.srcAddr().byte3 != 87   )
 
 	{
 		{ FILE_LOG( logDEBUG ) << "IPlayer::processFragment: dropping packet with IP address: " << fragment.srcAddr().printable(); }
